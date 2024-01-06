@@ -4,13 +4,14 @@
  * Description:
  * loading the yml configuration into java
  */
-package com.jsonflare.lib.jsonflare.ymlconfig.config;
+package com.jsonflare.lib.jsonflare.common.ymlconfig.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
-import com.jsonflare.lib.jsonflare.ymlconfig.models.YmlConfigurationMap;
+import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(JsonFlareProperties.class)
 public class JsonFlareYmlConfiguration {
@@ -40,6 +42,7 @@ public class JsonFlareYmlConfiguration {
     public YmlConfigurationMap loadConfigurations() throws JsonFlareException {
         YmlConfigurationMap ymlConfigurationMap = new YmlConfigurationMap();
         if (jsonFlareProperties.getJsonConverterYmlLocation().equals(jsonFlareProperties.getFlatFileConverterYmlLocation())) {
+            log.error("[YML-CONFIG] json to flat file and flat file to json yml configurations cannot be in the same directory");
             throw new JsonFlareException("json to flat file and flat file to json yml configurations cannot be in the same directory");
         }
         loadConfig(jsonFlareProperties.getJsonConverterYmlLocation(), ymlConfigurationMap.getJsonToFlatFileConfigurationMap());
@@ -55,22 +58,33 @@ public class JsonFlareYmlConfiguration {
      * @throws JsonFlareException if any exception occured based on the cenarios this will throw
      */
     private void loadConfig(String ymlLocation, Map<String, Map<String, Object>> ymlConfigurationMap) throws JsonFlareException {
+        log.info("[YML-CONFIG] loading configurations for {}", ymlLocation);
         try {
-            for (Resource resource : new PathMatchingResourcePatternResolver().getResources("classpath*:" + ymlLocation + "/**/*.yml")) {
+            Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath*:" + ymlLocation + "/**/*.yml");
+            if (resources.length == 0) {
+                String msg = String.format("No Yml Configurations are presented in the given location [%s]", ymlLocation);
+                log.error("[YML-CONFIG] {}", msg);
+                throw new JsonFlareException(msg);
+            }
+            for (Resource resource : resources) {
                 if (resource.exists() && Objects.requireNonNull(resource.getFilename()).endsWith(".yml")) {
                     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
                     mapper.findAndRegisterModules();
                     Map<String, Object> configMap = mapper.readValue(resource.getFile(), new TypeReference<>() {
                     });
                     if (Objects.isNull(configMap.get("class-name"))) {
+                        log.error("Yml Configuration does not have the class-name please add it");
                         throw new JsonFlareException("Yml Configuration does not have the class-name please add it");
                     }
+                    log.error("[YML-CONFIG] configuration loaded for {}", configMap.get("class-name"));
                     ymlConfigurationMap.put(configMap.get("class-name").toString(), configMap);
                 } else {
+                    log.error(String.format("Given resource does not exists [%s]", resource.getFilename()));
                     throw new JsonFlareException(String.format("Given resource does not exists [%s]", resource.getFilename()));
                 }
             }
         } catch (Exception ex) {
+            log.error("An error occurred while loading the configurations", ex);
             throw new JsonFlareException("An error occurred while loading the configurations", ex);
         }
     }

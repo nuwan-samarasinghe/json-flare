@@ -4,7 +4,7 @@
  * Description:
  * yml configuration wrapper object
  */
-package com.jsonflare.lib.jsonflare.ymlconfig.models;
+package com.jsonflare.lib.jsonflare.common.ymlconfig.models;
 
 import lombok.Getter;
 

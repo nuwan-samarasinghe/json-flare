@@ -4,7 +4,7 @@
  * Description:
  * loading the yml configuration into java
  */
-package com.jsonflare.lib.jsonflare.ymlconfig.config;
+package com.jsonflare.lib.jsonflare.common.ymlconfig.config;
 
 import lombok.Getter;
 import lombok.Setter;

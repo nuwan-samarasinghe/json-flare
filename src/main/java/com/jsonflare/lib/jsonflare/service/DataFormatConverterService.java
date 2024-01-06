@@ -6,10 +6,12 @@
  */
 package com.jsonflare.lib.jsonflare.service;
 
+import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
+
 public interface DataFormatConverterService {
 
-    String convertFlatFileToJson();
+    String convertFlatFileToJson(String className) throws JsonFlareException;
 
-    String convertJsonToFlatFile();
+    String convertJsonToFlatFile(String className) throws JsonFlareException;
 
 }

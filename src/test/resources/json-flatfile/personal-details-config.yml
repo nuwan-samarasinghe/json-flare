@@ -1,0 +1,38 @@
+name: "Personal Details"
+description: ""
+data-type: "Object"
+class-name: "PersonalDetails"
+properties:
+  - name: "person"
+    description: "person details"
+    data-type: "Object"
+    properties:
+      - name: "name"
+        description: "Name of the person"
+        data-type: "String"
+        data-converter: "StringConverter"
+        max-length: 10
+      - name: "age"
+        description: "Age of the person"
+        data-type: "Integer"
+        data-converter: "IntegerConverter"
+        max-length: 3
+      - name: "address"
+        description: "Address details of the person"
+        data-type: "Object"
+        properties:
+          - name: "street"
+            description: "Street of the address"
+            data-type: "String"
+            data-converter: "StringConverter"
+            max-length: 20
+          - name: "city"
+            description: "City of the address"
+            data-type: "String"
+            data-converter: "StringConverter"
+            max-length: 30
+          - name: "zipcode"
+            description: "Zipcode of the address"
+            data-type: "String"
+            data-converter: "StringConverter"
+            max-length: 10

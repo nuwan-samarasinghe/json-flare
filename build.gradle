@@ -5,10 +5,28 @@ plugins {
 }
 
 group = 'com.jsonflare.lib'
-version = '0.0.1-SNAPSHOT'
+
+// Configure the bootJar task to depend on the customJar task
+tasks.named('bootJar') {
+	enabled = false
+	dependsOn customJar
+}
 
 java {
 	sourceCompatibility = '17'
+	modularity.inferModulePath = false // Ensures compatibility with non-modular projects
+}
+
+// Specify where the JAR is to be placed
+artifacts {
+	archives jar
+}
+
+// Custom Jar task to generate a JAR without -plain suffix
+tasks.register('customJar', Jar) {
+	archiveBaseName = 'jsonflare' // Set the base name for your JAR (without the version)
+	version = '0.0.1' // Replace this with your version number
+	from sourceSets.main.output // Include main classes and resources
 }
 
 configurations {

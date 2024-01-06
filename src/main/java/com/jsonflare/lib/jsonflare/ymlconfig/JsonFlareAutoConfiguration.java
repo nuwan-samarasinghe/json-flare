@@ -4,6 +4,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 @EnableConfigurationProperties(JsonFlareProperties.class)
 public class JsonFlareAutoConfiguration {
@@ -14,9 +17,11 @@ public class JsonFlareAutoConfiguration {
         this.jsonFlareProperties = jsonFlareProperties;
     }
 
-    @Bean
-    public String loadConfigurations() {
-        System.out.println("");
-        return "";
+    @Bean(name="ymlConfigurationMap")
+    public Map<String, String> loadConfigurations() {
+        Map<String, String> map = new HashMap<>();
+        map.put("json", jsonFlareProperties.getJsonConverterYmlLocation());
+        map.put("flatfile", jsonFlareProperties.getFlatFileConverterYmlLocation());
+        return map;
     }
 }

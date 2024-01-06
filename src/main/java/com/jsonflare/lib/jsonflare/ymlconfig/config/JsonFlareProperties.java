@@ -1,4 +1,4 @@
-package com.jsonflare.lib.jsonflare.ymlconfig;
+package com.jsonflare.lib.jsonflare.ymlconfig.config;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,6 @@
-package com.jsonflare.lib.jsonflare.common;
+package com.jsonflare.lib.jsonflare.common.annotations;
 
+import com.jsonflare.lib.jsonflare.common.config.LibraryAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

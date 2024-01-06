@@ -1,0 +1,15 @@
+{
+  "properties": [
+    {
+      "name": "jsonflare.json-converter-yml-location",
+      "type": "java.lang.String",
+      "description": "Location for JSON Converter YAML"
+    },
+    {
+      "name": "jsonflare.flatfile-converter-yml-location",
+      "type": "java.lang.String",
+      "description": "Location for FlatFile Converter YAML"
+    }
+  ],
+  "hints": []
+}

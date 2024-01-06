@@ -1,3 +1,9 @@
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * loading the yml configuration into java
+ */
 package com.jsonflare.lib.jsonflare.ymlconfig.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,14 +22,20 @@ import java.util.Objects;
 
 @Configuration
 @EnableConfigurationProperties(JsonFlareProperties.class)
-public class JsonFlareAutoConfiguration {
+public class JsonFlareYmlConfiguration {
 
     private final JsonFlareProperties jsonFlareProperties;
 
-    public JsonFlareAutoConfiguration(JsonFlareProperties jsonFlareProperties) {
+    public JsonFlareYmlConfiguration(JsonFlareProperties jsonFlareProperties) {
         this.jsonFlareProperties = jsonFlareProperties;
     }
 
+    /**
+     * create a bean with YmlConfigurationMap and this has all the configurations
+     *
+     * @return YmlConfigurationMap object
+     * @throws JsonFlareException if any error occurred while reading the yml configurations.
+     */
     @Bean(name = "ymlConfigurationMap")
     public YmlConfigurationMap loadConfigurations() throws JsonFlareException {
         YmlConfigurationMap ymlConfigurationMap = new YmlConfigurationMap();

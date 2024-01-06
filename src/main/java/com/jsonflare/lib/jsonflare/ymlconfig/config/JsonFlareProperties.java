@@ -1,9 +1,18 @@
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * loading the yml configuration into java
+ */
 package com.jsonflare.lib.jsonflare.ymlconfig.config;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * yml configuration location
+ */
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "jsonflare")

@@ -1,3 +1,9 @@
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * exception class to wrap
+ */
 package com.jsonflare.lib.jsonflare.common.exceptions;
 
 public class JsonFlareException extends Exception {

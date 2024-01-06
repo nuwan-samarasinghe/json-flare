@@ -1,3 +1,9 @@
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * yml configuration wrapper object
+ */
 package com.jsonflare.lib.jsonflare.ymlconfig.models;
 
 import lombok.Getter;

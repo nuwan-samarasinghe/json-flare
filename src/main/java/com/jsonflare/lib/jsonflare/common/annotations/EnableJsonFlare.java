@@ -1,3 +1,9 @@
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * annotation to enable auto scan the library classes
+ */
 package com.jsonflare.lib.jsonflare.common.annotations;
 
 import com.jsonflare.lib.jsonflare.common.config.LibraryAutoConfiguration;

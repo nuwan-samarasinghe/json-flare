@@ -1,3 +1,9 @@
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * allow the library to scan its own clases
+ */
 package com.jsonflare.lib.jsonflare.common.config;
 
 import org.springframework.context.annotation.ComponentScan;

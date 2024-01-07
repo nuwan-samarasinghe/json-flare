@@ -1,38 +1,18 @@
 name: "Personal Details"
 description: ""
-data-type: "Object"
-class-name: "PersonalDetails"
+dataType: "Object"
+className: "PersonalDetails"
 properties:
   - name: "person"
     description: "person details"
-    data-type: "Object"
+    dataType: "Object"
     properties:
-      - name: "name"
-        description: "Name of the person"
-        data-type: "String"
-        data-converter: "StringConverter"
-        max-length: 10
-      - name: "age"
-        description: "Age of the person"
-        data-type: "Integer"
-        data-converter: "IntegerConverter"
-        max-length: 3
+      - { name: "name", description: "Name of the person", dataType: "String", dataConverter: "StringConverter", maxLength: 10, order: 1 }
+      - { name: "age", description: "Age of the person", dataType: "Integer", dataConverter: "IntegerConverter", maxLength: 3, order: 2 }
       - name: "address"
         description: "Address details of the person"
-        data-type: "Object"
+        dataType: "Object"
         properties:
-          - name: "street"
-            description: "Street of the address"
-            data-type: "String"
-            data-converter: "StringConverter"
-            max-length: 20
-          - name: "city"
-            description: "City of the address"
-            data-type: "String"
-            data-converter: "StringConverter"
-            max-length: 30
-          - name: "zipcode"
-            description: "Zipcode of the address"
-            data-type: "String"
-            data-converter: "StringConverter"
-            max-length: 10
+          - { name: "street", description: "Street of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 20, order: 3 }
+          - { name: "city", description: "City of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 30, order: 4 }
+          - { name: "zipcode", description: "Zipcode of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 5, order: 5 }

@@ -1,5 +1,7 @@
 package com.jsonflare.lib.jsonflare.flatfiletojson.service;
 
+import java.util.Map;
+
 /**
  * Author: NUWAN
  * Date: 2024-01-06
@@ -7,4 +9,5 @@ package com.jsonflare.lib.jsonflare.flatfiletojson.service;
  * convert json file to flat-file configuration
  */
 public interface FlatFileToJsonService {
+    String convert(String className, String data);
 }

@@ -13,6 +13,6 @@ import java.util.Map;
 
 @Getter
 public class YmlConfigurationMap {
-    private final Map<String, Map<String, Object>> jsonToFlatFileConfigurationMap = new HashMap<>();
-    private final Map<String, Map<String, Object>> FlatFileToJsonConfigurationMap = new HashMap<>();
+    private final Map<String, YmlConfiguration> jsonToFlatFileConfigurationMap = new HashMap<>();
+    private final Map<String, YmlConfiguration> FlatFileToJsonConfigurationMap = new HashMap<>();
 }

@@ -6,10 +6,10 @@
  */
 package com.jsonflare.lib.jsonflare.common.ymlconfig.config;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
+import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -57,7 +57,7 @@ public class JsonFlareYmlConfiguration {
      * @param ymlConfigurationMap yml configurations as a java object
      * @throws JsonFlareException if any exception occured based on the cenarios this will throw
      */
-    private void loadConfig(String ymlLocation, Map<String, Map<String, Object>> ymlConfigurationMap) throws JsonFlareException {
+    private void loadConfig(String ymlLocation, Map<String, YmlConfiguration> ymlConfigurationMap) throws JsonFlareException {
         log.info("[YML-CONFIG] loading configurations for {}", ymlLocation);
         try {
             Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath*:" + ymlLocation + "/**/*.yml");
@@ -70,14 +70,14 @@ public class JsonFlareYmlConfiguration {
                 if (resource.exists() && Objects.requireNonNull(resource.getFilename()).endsWith(".yml")) {
                     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
                     mapper.findAndRegisterModules();
-                    Map<String, Object> configMap = mapper.readValue(resource.getFile(), new TypeReference<>() {
-                    });
-                    if (Objects.isNull(configMap.get("class-name"))) {
+                    YmlConfiguration ymlConfiguration = mapper.readValue(resource.getFile(), YmlConfiguration.class);
+                    System.out.println();
+                    if (Objects.isNull(ymlConfiguration.getClassName())) {
                         log.error("Yml Configuration does not have the class-name please add it");
                         throw new JsonFlareException("Yml Configuration does not have the class-name please add it");
                     }
-                    log.error("[YML-CONFIG] configuration loaded for {}", configMap.get("class-name"));
-                    ymlConfigurationMap.put(configMap.get("class-name").toString(), configMap);
+                    log.error("[YML-CONFIG] configuration loaded for {}", ymlConfiguration.getClassName());
+                    ymlConfigurationMap.put(ymlConfiguration.getClassName(), ymlConfiguration);
                 } else {
                     log.error(String.format("Given resource does not exists [%s]", resource.getFilename()));
                     throw new JsonFlareException(String.format("Given resource does not exists [%s]", resource.getFilename()));

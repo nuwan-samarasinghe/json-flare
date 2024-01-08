@@ -65,7 +65,7 @@ public class FlatFileToJsonConfigurator {
         if (Objects.isNull(previousRange)) {
             return new Range(1, ymlConfiguration.getMaxLength());
         } else {
-            int upperBound = previousRange.getMax() + 1 + ymlConfiguration.getMaxLength();
+            int upperBound = previousRange.getMax() + ymlConfiguration.getMaxLength();
             return new Range(previousRange.getMax() + 1, upperBound);
         }
     }

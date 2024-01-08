@@ -1,7 +1,7 @@
 name: "Personal Details"
 description: ""
 dataType: "Object"
-className: "PersonalDetails"
+className: "PersonalDetailsSingleMultiLevel"
 properties:
   - name: "person"
     description: "person details"

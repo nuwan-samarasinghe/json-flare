@@ -27,6 +27,7 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
     public static final String OBJECT_NODE = "ObjectNode";
     public static final String ARRAY_NODE = "ArrayNode";
     public static final String STRING = "String";
+    public static final String INTEGER = "Integer";
     private final Map<String, FlatFileToJsonConfigurationWrapper> flatFileToJsonConfigurationWrapperMap;
 
     public FlatFileToJsonServiceImpl(Map<String, FlatFileToJsonConfigurationWrapper> flatFileToJsonConfigurationWrapperMap) {
@@ -38,56 +39,44 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
         try {
             FlatFileToJsonConfigurationWrapper flatFileToJsonConfigurationWrapper = flatFileToJsonConfigurationWrapperMap.get(className);
             FieldSet tokenize = flatFileToJsonConfigurationWrapper.getFixedLengthTokenizer().tokenize(data);
-            return createJsonObject(tokenize, flatFileToJsonConfigurationWrapper);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectNode root = objectMapper.createObjectNode();
+            buildJsonObject(objectMapper, root, flatFileToJsonConfigurationWrapper.getYmlConfigurationMap(), tokenize);
+            return root.toPrettyString();
         } catch (Exception ex) {
             throw new JsonFlareException("An error occurred while converting the data into json", ex);
         }
     }
 
-    private String createJsonObject(FieldSet tokenize,
-                                    FlatFileToJsonConfigurationWrapper flatFileToJsonConfigurationWrapper) throws JsonFlareException {
-        //TODO need to do the data conversions
-        YmlConfiguration ymlConfiguration = flatFileToJsonConfigurationWrapper.getYmlConfigurationMap();
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode root = objectMapper.createObjectNode();
-        for (YmlConfiguration ymlConfig : ymlConfiguration.getProperties()) {
-            if (!(ymlConfig.getDataType().equals(OBJECT_NODE)
-                    || ymlConfig.getDataType().equals(ARRAY_NODE)
-                    || ymlConfig.getDataType().equals(STRING))) {
-                throw new JsonFlareException("Invalid Data type provided in the configuration please check");
+    private void buildJsonObject(ObjectMapper objectMapper,
+                                 ObjectNode parent,
+                                 YmlConfiguration config,
+                                 FieldSet tokenize) throws JsonFlareException {
+        for (YmlConfiguration ymlConfig : config.getProperties()) {
+            if (!(isValidDataType(ymlConfig))) {
+                throw new JsonFlareException("Invalid Data type provided in the configuration. Please check.");
             }
             if (ymlConfig.getDataType().equals(OBJECT_NODE)) {
-                root.set(ymlConfig.getName(), objectMapper.createObjectNode());
-                for (YmlConfiguration configuration : ymlConfig.getProperties()) {
-                    createObjectNode(objectMapper, configuration, tokenize, (ObjectNode) root.get(ymlConfig.getName()));
-                }
+                ObjectNode childNode = objectMapper.createObjectNode();
+                parent.set(ymlConfig.getName(), childNode);
+                buildJsonObject(objectMapper, childNode, ymlConfig, tokenize);
             } else if (ymlConfig.getDataType().equals(ARRAY_NODE)) {
-                root.set(ymlConfig.getName(), createArrayNode(objectMapper, ymlConfig, tokenize));
+                parent.set(ymlConfig.getName(), createArrayNode(objectMapper, ymlConfig, tokenize));
             } else {
-                root.put(ymlConfig.getName(), "testing");
+                parent.put(ymlConfig.getName(), tokenize.readString(ymlConfig.getName()));
             }
         }
-        return root.toPrettyString();
     }
 
-    private JsonNode createArrayNode(ObjectMapper objectMapper,
-                                     YmlConfiguration ymlConfig,
-                                     FieldSet tokenize) {
+    private boolean isValidDataType(YmlConfiguration ymlConfig) {
+        return ymlConfig.getDataType().equals(OBJECT_NODE)
+                || ymlConfig.getDataType().equals(ARRAY_NODE)
+                || ymlConfig.getDataType().equals(STRING)
+                || ymlConfig.getDataType().equals(INTEGER);
+    }
+
+    private JsonNode createArrayNode(ObjectMapper objectMapper, YmlConfiguration ymlConfig, FieldSet tokenize) {
+        // Implement createArrayNode logic here if required
         return null;
-    }
-
-    private void createObjectNode(ObjectMapper objectMapper,
-                                  YmlConfiguration ymlConfig,
-                                  FieldSet tokenize,
-                                  ObjectNode node) {
-        if (!(ymlConfig.getDataType().equals(OBJECT_NODE)
-                || ymlConfig.getDataType().equals(ARRAY_NODE))) {
-            node.put(ymlConfig.getName(), tokenize.readString(ymlConfig.getName()));
-        } else {
-            node.set(ymlConfig.getName(), objectMapper.createObjectNode());
-            for (YmlConfiguration configuration : ymlConfig.getProperties()) {
-                createObjectNode(objectMapper, configuration, tokenize, (ObjectNode) node.get(ymlConfig.getName()));
-            }
-        }
     }
 }

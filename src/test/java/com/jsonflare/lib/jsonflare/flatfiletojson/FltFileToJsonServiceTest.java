@@ -25,12 +25,14 @@ public class FltFileToJsonServiceTest {
     @Autowired
     private FlatFileToJsonService flatFileToJsonService;
 
-    @Autowired
-    private YmlConfigurationMap ymlConfigurationMap;
-
     @Test
     public void givenFLatFileText_whenConvertToJson_thenReturnStringJson() throws JsonFlareException {
         flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel2", "John Doe  30 123 Main St         Example City                  12345ABC CorporationTechnology");
+    }
+
+    @Test
+    public void givenFLatFileText_whenConvertToJson_thenReturnStringJson2() throws JsonFlareException {
+        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel", "John Doe  30 123 Main St         Example City                  12345ABC CorporationTechnologyJane Smith     Software EngineJane Smith     Software Engine");
     }
 
 }

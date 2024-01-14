@@ -56,6 +56,7 @@ public class FlatFileToJsonConfigurator {
             tokenizer.setNames(columns);
             tokenizer.setColumns(ranges);
             flatFileToJsonConfigurationWrapper.setFixedLengthTokenizer(tokenizer);
+            flatFileToJsonConfigurationWrapper.setMaxLength(ranges[ranges.length - 1].getMax());
             configurationWrapperMap.put(name, flatFileToJsonConfigurationWrapper);
         }
         return configurationWrapperMap;

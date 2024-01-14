@@ -11,5 +11,5 @@ import java.util.Map;
  * convert json file to flat-file configuration
  */
 public interface FlatFileToJsonService {
-    String convert(String className, String data) throws JsonFlareException;
+    String convert(String className, String data, boolean isPrettyString) throws JsonFlareException;
 }

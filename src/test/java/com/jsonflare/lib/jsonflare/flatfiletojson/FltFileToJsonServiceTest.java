@@ -26,12 +26,27 @@ public class FltFileToJsonServiceTest {
 
     @Test
     public void givenFLatFileText_whenConvertToJson_thenReturnStringJson() throws JsonFlareException {
-        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel2", "John Doe  30 123 Main St         Example City                  12345ABC CorporationTechnology");
+        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel2", "John Doe  30 123 Main St         Example City                  12345ABC CorporationTechnology", true);
+    }
+
+    @Test
+    public void givenFLatFileText_whenConvertToJson_thenReturnStringJson3() throws JsonFlareException {
+        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel3", "John Doe  30 123 Main St         Example City                  12345      CA         United StatesABC CorporationTechnology", true);
+    }
+
+    @Test
+    public void givenFLatFileText_whenConvertToJson_thenReturnStringJson5() throws JsonFlareException {
+        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel5", "John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5", true);
+    }
+
+    @Test
+    public void givenFLatFileText_whenConvertToJson_thenReturnStringJson7() throws JsonFlareException {
+        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel5", "John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5John Doe  30 123 Main St         Example City                  12345      CA         United StatesA1B2F3G5", true);
     }
 
     @Test
     public void givenFLatFileText_whenConvertToJson_thenReturnStringJson2() throws JsonFlareException {
-        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel", "John Doe  30 123 Main St         Example City                  12345ABC CorporationTechnologyJane Smith     Software EngineJane Smith     Software Engine");
+        flatFileToJsonService.convert("PersonalDetailsMultiMultiLevel", "John Doe  30 123 Main St         Example City                  12345ABC CorporationTechnologyJane Smith     Software EngineJane Smith     Software Engine", true);
     }
 
 }

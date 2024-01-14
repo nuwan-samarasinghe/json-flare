@@ -34,11 +34,11 @@ public class DataFormatConverterServiceImpl implements DataFormatConverterServic
     }
 
     @Override
-    public String convertFlatFileToJson(String className, String data) throws JsonFlareException {
+    public String convertFlatFileToJson(String className, String data, boolean isPrettyString) throws JsonFlareException {
         if (Objects.isNull(ymlConfigurationMap.getFlatFileToJsonConfigurationMap()) || ymlConfigurationMap.getFlatFileToJsonConfigurationMap().size() <= 0) {
             throw new JsonFlareException(String.format("No yml configuration available for the given name [%s]", className));
         }
-        return flatFileToJsonService.convert(className, data);
+        return flatFileToJsonService.convert(className, data, isPrettyString);
     }
 
     @Override

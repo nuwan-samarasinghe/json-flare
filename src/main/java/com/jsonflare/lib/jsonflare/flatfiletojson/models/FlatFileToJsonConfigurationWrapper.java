@@ -17,6 +17,7 @@ import java.util.Map;
 public class FlatFileToJsonConfigurationWrapper {
     private String name;
     private FixedLengthTokenizer fixedLengthTokenizer;
+    private Integer maxLength;
     private YmlConfiguration ymlConfigurationMap;
     private List<YmlConfiguration> flatternedList;
 }

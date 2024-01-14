@@ -2,7 +2,6 @@ package com.jsonflare.lib.jsonflare.flatfiletojson;
 
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.config.JsonFlareYmlConfiguration;
-import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;
 import com.jsonflare.lib.jsonflare.flatfiletojson.config.FlatFileToJsonConfigurator;
 import com.jsonflare.lib.jsonflare.flatfiletojson.service.FlatFileToJsonService;
 import com.jsonflare.lib.jsonflare.flatfiletojson.service.impl.FlatFileToJsonServiceImpl;

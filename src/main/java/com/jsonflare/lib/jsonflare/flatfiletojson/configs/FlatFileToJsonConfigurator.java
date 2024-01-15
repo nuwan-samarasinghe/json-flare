@@ -1,4 +1,4 @@
-package com.jsonflare.lib.jsonflare.flatfiletojson.config;
+package com.jsonflare.lib.jsonflare.flatfiletojson.configs;
 
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;

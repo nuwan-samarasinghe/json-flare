@@ -7,25 +7,25 @@ properties:
     description: "person details"
     dataType: "ObjectNode"
     properties:
-      - { name: "name", description: "Name of the person", dataType: "String", dataConverter: "StringConverter", maxLength: 10, order: 1 }
-      - { name: "age", description: "Age of the person", dataType: "Integer", dataConverter: "IntegerConverter", maxLength: 3, order: 2 }
+      - { name: "name", description: "Name of the person", dataType: "String", function: "StringConverter", maxLength: 10, order: 1 }
+      - { name: "age", description: "Age of the person", dataType: "Integer", function: "IntegerConverter", maxLength: 3, order: 2 }
       - name: "address"
         description: "Address details of the person"
         dataType: "ObjectNode"
         properties:
-          - { name: "street", description: "Street of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 20, order: 3 }
-          - { name: "city", description: "City of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 30, order: 4 }
-          - { name: "zipcode", description: "Zipcode of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 5, order: 5 }
+          - { name: "street", description: "Street of the address", dataType: "String", function: "StringConverter", maxLength: 20, order: 3 }
+          - { name: "city", description: "City of the address", dataType: "String", function: "StringConverter", maxLength: 30, order: 4 }
+          - { name: "zipcode", description: "Zipcode of the address", dataType: "String", function: "StringConverter", maxLength: 5, order: 5 }
           - name: "countryDetails"
             description: "Additional details of the address"
             dataType: "ObjectNode"
             properties:
-              - { name: "state", description: "State of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 15, order: 6 }
-              - { name: "country", description: "Country of the address", dataType: "String", dataConverter: "StringConverter", maxLength: 15, order: 7 }
+              - { name: "state", description: "State of the address", dataType: "String", function: "StringConverter", maxLength: 15, order: 6 }
+              - { name: "country", description: "Country of the address", dataType: "String", function: "StringConverter", maxLength: 15, order: 7 }
   - name: "company"
     description: "company details"
     dataType: "ObjectNode"
     properties:
-      - { name: "name", description: "Name of the company", dataType: "String", dataConverter: "StringConverter", maxLength: 15, order: 8 }
-      - { name: "industry", description: "Industry of the company", dataType: "String", dataConverter: "StringConverter", maxLength: 10, order: 9 }
+      - { name: "name", description: "Name of the company", dataType: "String", function: "StringConverter", maxLength: 15, order: 8 }
+      - { name: "industry", description: "Industry of the company", dataType: "String", function: "StringConverter", maxLength: 10, order: 9 }
 

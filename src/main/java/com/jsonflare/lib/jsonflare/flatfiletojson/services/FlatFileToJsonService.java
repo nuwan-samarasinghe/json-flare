@@ -1,8 +1,6 @@
-package com.jsonflare.lib.jsonflare.flatfiletojson.service;
+package com.jsonflare.lib.jsonflare.flatfiletojson.services;
 
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
-
-import java.util.Map;
 
 /**
  * Author: NUWAN
@@ -11,5 +9,5 @@ import java.util.Map;
  * convert json file to flat-file configuration
  */
 public interface FlatFileToJsonService {
-    String convert(String className, String data, boolean isPrettyString) throws JsonFlareException;
+    String convert(String className, String data) throws JsonFlareException;
 }

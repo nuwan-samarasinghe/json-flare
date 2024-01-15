@@ -1,12 +1,11 @@
 package com.jsonflare.lib.jsonflare.ymlconfig;
 
-import com.jsonflare.lib.jsonflare.common.ymlconfig.config.JsonFlareYmlConfiguration;
+import com.jsonflare.lib.jsonflare.common.ymlconfig.configs.JsonFlareYmlConfiguration;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.Map;
 

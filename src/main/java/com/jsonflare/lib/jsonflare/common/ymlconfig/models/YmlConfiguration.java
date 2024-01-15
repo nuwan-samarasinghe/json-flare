@@ -19,7 +19,7 @@ public class YmlConfiguration {
     private String name;
     private String description;
     private String dataType;
-    private String dataConverter;
+    private String function;
     private Integer maxLength;
     private String className;
     private Integer order;

@@ -8,7 +8,7 @@ package com.jsonflare.lib.jsonflare.service.impl;
 
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;
-import com.jsonflare.lib.jsonflare.flatfiletojson.service.FlatFileToJsonService;
+import com.jsonflare.lib.jsonflare.flatfiletojson.services.FlatFileToJsonService;
 import com.jsonflare.lib.jsonflare.jsontoflat.service.JsonToFlatFileService;
 import com.jsonflare.lib.jsonflare.service.DataFormatConverterService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +34,11 @@ public class DataFormatConverterServiceImpl implements DataFormatConverterServic
     }
 
     @Override
-    public String convertFlatFileToJson(String className, String data, boolean isPrettyString) throws JsonFlareException {
+    public String convertFlatFileToJson(String className, String data) throws JsonFlareException {
         if (Objects.isNull(ymlConfigurationMap.getFlatFileToJsonConfigurationMap()) || ymlConfigurationMap.getFlatFileToJsonConfigurationMap().size() <= 0) {
             throw new JsonFlareException(String.format("No yml configuration available for the given name [%s]", className));
         }
-        return flatFileToJsonService.convert(className, data, isPrettyString);
+        return flatFileToJsonService.convert(className, data);
     }
 
     @Override

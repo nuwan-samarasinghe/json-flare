@@ -1,11 +1,12 @@
-package com.jsonflare.lib.jsonflare.flatfiletojson.service.impl;
+package com.jsonflare.lib.jsonflare.flatfiletojson.services.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
+import com.jsonflare.lib.jsonflare.flatfiletojson.configs.JsonObjectCreationTask;
 import com.jsonflare.lib.jsonflare.flatfiletojson.models.FlatFileToJsonConfigurationWrapper;
-import com.jsonflare.lib.jsonflare.flatfiletojson.service.FlatFileToJsonService;
+import com.jsonflare.lib.jsonflare.flatfiletojson.services.FlatFileToJsonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.stereotype.Service;
@@ -33,20 +34,20 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
     }
 
     @Override
-    public String convert(String className, String data, boolean isPrettyString) throws JsonFlareException {
+    public String convert(String className, String data) throws JsonFlareException {
         try {
             long startTime = System.currentTimeMillis();
             FlatFileToJsonConfigurationWrapper flatFileToJsonConfigurationWrapper = flatFileToJsonConfigurationWrapperMap.get(className);
-            List<String> dataList = brakeTextData(flatFileToJsonConfigurationWrapper.getMaxLength(), data);
+            List<String> dataList = textSplitter(flatFileToJsonConfigurationWrapper.getMaxLength(), data);
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonText;
             if (dataList.size() == 1) {
-                jsonText = concurrentlyBuildJsonObject(dataList.get(0), flatFileToJsonConfigurationWrapper, objectMapper).toString();
+                jsonText = concurrentJsonObjectBuilder(dataList.get(0), flatFileToJsonConfigurationWrapper, objectMapper).toString();
             } else if (dataList.size() > 1
                     && !StringUtils.hasText(flatFileToJsonConfigurationWrapper.getYmlConfigurationMap().getName())) {
                 ArrayNode arrayNode = objectMapper.createArrayNode();
                 arrayNode.addAll(dataList.parallelStream()
-                        .map(val -> concurrentlyBuildJsonObject(val, flatFileToJsonConfigurationWrapper, objectMapper))
+                        .map(val -> concurrentJsonObjectBuilder(val, flatFileToJsonConfigurationWrapper, objectMapper))
                         .toList());
                 jsonText = arrayNode.toString();
             } else if (dataList.size() > 1
@@ -54,7 +55,7 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
                 ObjectNode objectNode = objectMapper.createObjectNode();
                 ArrayNode arrayNode = objectMapper.createArrayNode();
                 arrayNode.addAll(dataList.parallelStream()
-                        .map(val -> concurrentlyBuildJsonObject(val, flatFileToJsonConfigurationWrapper, objectMapper))
+                        .map(val -> concurrentJsonObjectBuilder(val, flatFileToJsonConfigurationWrapper, objectMapper))
                         .toList());
                 objectNode.set(flatFileToJsonConfigurationWrapper.getYmlConfigurationMap().getName(), arrayNode);
                 jsonText = objectNode.toString();
@@ -70,7 +71,7 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
         }
     }
 
-    private List<String> brakeTextData(Integer maxLength, String data) throws JsonFlareException {
+    private List<String> textSplitter(Integer maxLength, String data) throws JsonFlareException {
         List<String> values = new ArrayList<>();
         if (data.length() % maxLength != 0) {
             throw new JsonFlareException("Invalid data length");
@@ -87,7 +88,7 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
         return values;
     }
 
-    private ObjectNode concurrentlyBuildJsonObject(
+    private ObjectNode concurrentJsonObjectBuilder(
             String data,
             FlatFileToJsonConfigurationWrapper flatFileToJsonConfigurationWrapper,
             ObjectMapper objectMapper) {

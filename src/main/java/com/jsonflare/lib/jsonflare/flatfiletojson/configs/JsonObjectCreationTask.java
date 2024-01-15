@@ -1,13 +1,14 @@
-package com.jsonflare.lib.jsonflare.flatfiletojson.service.impl;
+package com.jsonflare.lib.jsonflare.flatfiletojson.configs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareRuntimeException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
+import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.DataTypeTransformerFactory;
 import org.springframework.batch.item.file.transform.FieldSet;
 
 import java.util.concurrent.RecursiveAction;
+import java.util.function.Function;
 
 /**
  * Author: NUWAN
@@ -45,7 +46,9 @@ public class JsonObjectCreationTask extends RecursiveAction {
             } else if (ymlConfig.getDataType().equals(ARRAY_NODE)) {
                 throw new JsonFlareRuntimeException("Not implemented for this version");
             } else {
-                root.put(ymlConfig.getName(), tokenize.readString(ymlConfig.getName()));
+                DataTypeTransformerFactory dataTypeTransformerFactory = DataTypeTransformerFactory.getInstance();
+                root.putIfAbsent(ymlConfig.getName(),
+                        objectMapper.valueToTree(dataTypeTransformerFactory.getTransformer(ymlConfig.getDataType()).transform(tokenize.readString(ymlConfig.getName()))));
             }
         }
     }

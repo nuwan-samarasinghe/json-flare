@@ -4,7 +4,7 @@
  * Description:
  * allow the library to scan its own clases
  */
-package com.jsonflare.lib.jsonflare.common.config;
+package com.jsonflare.lib.jsonflare.common.configs;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

@@ -2,6 +2,7 @@ package com.jsonflare.lib.jsonflare.flatfiletojson.configs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.jsonflare.lib.jsonflare.common.configs.Constants;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareRuntimeException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.DataTypeTransformerFactory;
@@ -10,16 +11,14 @@ import org.springframework.batch.item.file.transform.FieldSet;
 import java.util.concurrent.RecursiveAction;
 import java.util.function.Function;
 
+import static com.jsonflare.lib.jsonflare.common.configs.Constants.*;
+
 /**
  * Author: NUWAN
  * Date: 2024-01-14
  * Description:
  */
 public class JsonObjectCreationTask extends RecursiveAction {
-    public static final String OBJECT_NODE = "ObjectNode";
-    public static final String ARRAY_NODE = "ArrayNode";
-    public static final String STRING = "String";
-    public static final String INTEGER = "Integer";
     private final ObjectMapper objectMapper;
     private final ObjectNode root;
     private final YmlConfiguration ymlConfigurationMap;
@@ -48,7 +47,12 @@ public class JsonObjectCreationTask extends RecursiveAction {
             } else {
                 DataTypeTransformerFactory dataTypeTransformerFactory = DataTypeTransformerFactory.getInstance();
                 root.putIfAbsent(ymlConfig.getName(),
-                        objectMapper.valueToTree(dataTypeTransformerFactory.getTransformer(ymlConfig.getDataType()).transform(tokenize.readString(ymlConfig.getName()))));
+                        objectMapper.valueToTree(
+                                dataTypeTransformerFactory.getTransformer(ymlConfig.getDataType()).transform(
+                                        tokenize.readString(ymlConfig.getName())
+                                )
+                        )
+                );
             }
         }
     }

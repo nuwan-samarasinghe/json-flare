@@ -8,6 +8,7 @@ package com.jsonflare.lib.jsonflare.common.ymlconfig.configs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.jsonflare.lib.jsonflare.common.configs.YAMLValidator;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfigurationMap;
@@ -47,6 +48,7 @@ public class JsonFlareYmlConfiguration {
         }
         loadConfig(jsonFlareProperties.getJsonConverterYmlLocation(), ymlConfigurationMap.getJsonToFlatFileConfigurationMap());
         loadConfig(jsonFlareProperties.getFlatFileConverterYmlLocation(), ymlConfigurationMap.getFlatFileToJsonConfigurationMap());
+        YAMLValidator.validateStructure(ymlConfigurationMap);
         return ymlConfigurationMap;
     }
 

@@ -1,11 +1,14 @@
 package com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers;
 
+import com.jsonflare.lib.jsonflare.common.configs.Constants;
 import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.impl.IntegerDataTypeTransformerImpl;
 import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.impl.StringDataTypeTransformerImpl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.jsonflare.lib.jsonflare.common.configs.Constants.*;
 
 /**
  * Author: NUWAN
@@ -15,8 +18,7 @@ import java.util.Objects;
  */
 public class DataTypeTransformerFactory {
 
-    public static final String INTEGER = "Integer";
-    public static final String STRING = "String";
+
     private static DataTypeTransformerFactory instance;
     private final Map<String, DataTypeTransformer<?>> transformers;
 

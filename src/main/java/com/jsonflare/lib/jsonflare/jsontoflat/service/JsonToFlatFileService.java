@@ -1,8 +1,9 @@
 package com.jsonflare.lib.jsonflare.jsontoflat.service;
 
+import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Author: NUWAN
@@ -11,5 +12,5 @@ import java.util.Map;
  * json data to flat file converter service
  */
 public interface JsonToFlatFileService {
-    String convert(YmlConfiguration ymlConfiguration, String data);
+    String convert(YmlConfiguration ymlConfiguration, String data) throws JsonFlareException;
 }

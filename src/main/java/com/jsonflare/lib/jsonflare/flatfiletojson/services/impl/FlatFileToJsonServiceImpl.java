@@ -96,6 +96,7 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
         FieldSet tokenize = flatFileToJsonConfigurationWrapper.getFixedLengthTokenizer().tokenize(data);
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         forkJoinPool.invoke(new JsonObjectCreationTask(objectMapper, objectNode, flatFileToJsonConfigurationWrapper.getYmlConfigurationMap(), tokenize));
+        log.info("Using fork join to generate the json file and configs are {}", forkJoinPool);
         return objectNode;
     }
 }

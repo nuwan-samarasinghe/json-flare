@@ -34,6 +34,7 @@ public class JsonToFlatFileServiceImpl implements JsonToFlatFileService {
             log.info("Using fork join to generate the flat file and configs are {}", forkJoinPool);
             return flatFile.toString();
         } catch (JsonProcessingException e) {
+            log.error("Invalid Json provided", e);
             throw new JsonFlareException("Invalid Json provided", e);
         }
     }

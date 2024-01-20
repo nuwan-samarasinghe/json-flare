@@ -6,6 +6,12 @@
  */
 package com.jsonflare.lib.jsonflare.common.exceptions;
 
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * json flare exception
+ */
 public class JsonFlareException extends Exception {
 
     /**

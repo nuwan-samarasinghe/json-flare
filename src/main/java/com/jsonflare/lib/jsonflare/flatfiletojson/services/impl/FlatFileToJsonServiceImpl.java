@@ -21,7 +21,7 @@ import java.util.concurrent.ForkJoinPool;
  * Author: NUWAN
  * Date: 2024-01-14
  * Description:
- * implementing parallel recursion to build json object
+ * implementing parallel recursion to build a json object
  */
 @Slf4j
 @Service
@@ -60,6 +60,7 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
                 objectNode.set(flatFileToJsonConfigurationWrapper.getYmlConfigurationMap().getName(), arrayNode);
                 jsonText = objectNode.toString();
             } else {
+                log.error("No data to process");
                 throw new JsonFlareException("No data to process");
             }
             long endTime = System.currentTimeMillis();
@@ -67,13 +68,18 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
             log.info("The JSON object was generated in {} milliseconds.", executionTime);
             return jsonText;
         } catch (Exception ex) {
+            log.error("An error occurred while converting the data into json", ex);
             throw new JsonFlareException("An error occurred while converting the data into json", ex);
         }
     }
 
+    /**
+     * split the given flat file into equal size chunks
+     */
     private List<String> textSplitter(Integer maxLength, String data) throws JsonFlareException {
         List<String> values = new ArrayList<>();
         if (data.length() % maxLength != 0) {
+            log.error("Invalid data length");
             throw new JsonFlareException("Invalid data length");
         } else {
             int numberOfBrakes = data.length() / maxLength;
@@ -85,9 +91,13 @@ public class FlatFileToJsonServiceImpl implements FlatFileToJsonService {
                 values.add(builder.append(data, start, end).toString());
             }
         }
+        log.info("No of split text count {}", values.size());
         return values;
     }
 
+    /**
+     * concurrently build the json object
+     */
     private ObjectNode concurrentJsonObjectBuilder(
             String data,
             FlatFileToJsonConfigurationWrapper flatFileToJsonConfigurationWrapper,

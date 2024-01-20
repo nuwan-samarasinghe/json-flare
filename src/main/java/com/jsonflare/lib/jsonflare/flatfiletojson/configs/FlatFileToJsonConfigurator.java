@@ -9,7 +9,12 @@ import org.springframework.batch.item.file.transform.Range;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Author: NUWAN
@@ -59,6 +64,7 @@ public class FlatFileToJsonConfigurator {
             flatFileToJsonConfigurationWrapper.setMaxLength(ranges[ranges.length - 1].getMax());
             configurationWrapperMap.put(name, flatFileToJsonConfigurationWrapper);
         }
+        log.info("No of configurations created {}", configurationWrapperMap.size());
         return configurationWrapperMap;
     }
 

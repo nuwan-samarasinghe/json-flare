@@ -1,6 +1,5 @@
 package com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers;
 
-import com.jsonflare.lib.jsonflare.common.configs.Constants;
 import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.impl.IntegerDataTypeTransformerImpl;
 import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.impl.StringDataTypeTransformerImpl;
 
@@ -8,7 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.jsonflare.lib.jsonflare.common.configs.Constants.*;
+import static com.jsonflare.lib.jsonflare.common.configs.Constants.INTEGER;
+import static com.jsonflare.lib.jsonflare.common.configs.Constants.STRING;
 
 /**
  * Author: NUWAN
@@ -50,6 +50,13 @@ public class DataTypeTransformerFactory {
         }
     }
 
+    /**
+     * adding new transformation methods
+     *
+     * @param type        name of the yml for the data type
+     * @param transformer transformer implementation
+     * @param <T>         what type of transformer it is
+     */
     public <T> void registerTransformer(String type, DataTypeTransformer<T> transformer) {
         transformers.put(type, transformer);
     }

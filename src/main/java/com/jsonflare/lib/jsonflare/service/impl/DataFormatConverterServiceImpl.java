@@ -35,7 +35,8 @@ public class DataFormatConverterServiceImpl implements DataFormatConverterServic
 
     @Override
     public String convertFlatFileToJson(String className, String data) throws JsonFlareException {
-        if (Objects.isNull(ymlConfigurationMap.getFlatFileToJsonConfigurationMap()) || ymlConfigurationMap.getFlatFileToJsonConfigurationMap().size() <= 0) {
+        if (Objects.isNull(ymlConfigurationMap.getFlatFileToJsonConfigurationMap()) || ymlConfigurationMap.getFlatFileToJsonConfigurationMap().isEmpty()) {
+            log.error("No yml configuration available for the given name [{}]", className);
             throw new JsonFlareException(String.format("No yml configuration available for the given name [%s]", className));
         }
         return flatFileToJsonService.convert(className, data);
@@ -43,7 +44,8 @@ public class DataFormatConverterServiceImpl implements DataFormatConverterServic
 
     @Override
     public String convertJsonToFlatFile(String className, String data) throws JsonFlareException {
-        if (Objects.isNull(ymlConfigurationMap.getJsonToFlatFileConfigurationMap()) || ymlConfigurationMap.getJsonToFlatFileConfigurationMap().size() <= 0) {
+        if (Objects.isNull(ymlConfigurationMap.getJsonToFlatFileConfigurationMap()) || ymlConfigurationMap.getJsonToFlatFileConfigurationMap().isEmpty()) {
+            log.error("No yml configuration available for the given name [{}]", className);
             throw new JsonFlareException(String.format("No yml configuration available for the given name [%s]", className));
         }
         return jsonToFlatFileService.convert(ymlConfigurationMap.getJsonToFlatFileConfigurationMap().get(className), data);

@@ -12,5 +12,14 @@ import java.util.List;
  * json data to flat file converter service
  */
 public interface JsonToFlatFileService {
+
+    /**
+     * convert the json file content into a flat-file
+     *
+     * @param ymlConfiguration yml configurations to follow to create flat-file
+     * @param data             json content
+     * @return flat-file content
+     * @throws JsonFlareException data conversion errors
+     */
     String convert(YmlConfiguration ymlConfiguration, String data) throws JsonFlareException;
 }

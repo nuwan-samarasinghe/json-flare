@@ -1,11 +1,11 @@
+package com.jsonflare.lib.jsonflare.common.exceptions;
+
 /**
  * Author: NUWAN
  * Date: 2024-01-06
  * Description:
- * exception class to wrap
+ * json flare runtime exception
  */
-package com.jsonflare.lib.jsonflare.common.exceptions;
-
 public class JsonFlareRuntimeException extends RuntimeException {
 
     /**

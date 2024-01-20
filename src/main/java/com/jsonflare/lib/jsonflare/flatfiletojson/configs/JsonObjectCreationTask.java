@@ -6,6 +6,7 @@ import com.jsonflare.lib.jsonflare.common.configs.Constants;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareRuntimeException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.flatfiletojson.functions.datatypetransformers.DataTypeTransformerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.file.transform.FieldSet;
 
 import java.util.concurrent.RecursiveAction;
@@ -18,6 +19,7 @@ import static com.jsonflare.lib.jsonflare.common.configs.Constants.*;
  * Date: 2024-01-14
  * Description:
  */
+@Slf4j
 public class JsonObjectCreationTask extends RecursiveAction {
     private final ObjectMapper objectMapper;
     private final ObjectNode root;
@@ -36,6 +38,7 @@ public class JsonObjectCreationTask extends RecursiveAction {
     protected void compute() {
         for (YmlConfiguration ymlConfig : ymlConfigurationMap.getProperties()) {
             if (!(isValidDataType(ymlConfig))) {
+                log.error("Invalid Data type provided in the configuration. Please check.");
                 throw new JsonFlareRuntimeException("Invalid Data type provided in the configuration. Please check.");
             }
             if (ymlConfig.getDataType().equals(OBJECT_NODE)) {
@@ -43,6 +46,7 @@ public class JsonObjectCreationTask extends RecursiveAction {
                 root.set(ymlConfig.getName(), childNode);
                 invokeAll(new JsonObjectCreationTask(objectMapper, childNode, ymlConfig, tokenize));
             } else if (ymlConfig.getDataType().equals(ARRAY_NODE)) {
+                log.error("Not implemented for this version");
                 throw new JsonFlareRuntimeException("Not implemented for this version");
             } else {
                 DataTypeTransformerFactory dataTypeTransformerFactory = DataTypeTransformerFactory.getInstance();

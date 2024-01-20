@@ -1,9 +1,3 @@
-/**
- * Author: NUWAN
- * Date: 2024-01-06
- * Description:
- * annotation to enable auto scan the library classes
- */
 package com.jsonflare.lib.jsonflare.common.annotations;
 
 import com.jsonflare.lib.jsonflare.common.configs.LibraryAutoConfiguration;
@@ -14,6 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * Adding enable autoconfiguration annotation
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Import(LibraryAutoConfiguration.class)

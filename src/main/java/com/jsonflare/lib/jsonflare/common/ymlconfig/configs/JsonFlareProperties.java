@@ -11,6 +11,9 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
  * yml configuration location
  */
 @Getter

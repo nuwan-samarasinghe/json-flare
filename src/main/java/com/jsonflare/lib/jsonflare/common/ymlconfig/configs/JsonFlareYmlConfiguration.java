@@ -22,6 +22,12 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Author: NUWAN
+ * Date: 2024-01-06
+ * Description:
+ * yml configuration wrapper object
+ */
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(JsonFlareProperties.class)
@@ -43,7 +49,7 @@ public class JsonFlareYmlConfiguration {
     public YmlConfigurationMap loadConfigurations() throws JsonFlareException {
         YmlConfigurationMap ymlConfigurationMap = new YmlConfigurationMap();
         if (jsonFlareProperties.getJsonConverterYmlLocation().equals(jsonFlareProperties.getFlatFileConverterYmlLocation())) {
-            log.error("[YML-CONFIG] json to flat file and flat file to json yml configurations cannot be in the same directory");
+            log.error("Json to flat file and flat file to json yml configurations cannot be in the same directory");
             throw new JsonFlareException("json to flat file and flat file to json yml configurations cannot be in the same directory");
         }
         loadConfig(jsonFlareProperties.getJsonConverterYmlLocation(), ymlConfigurationMap.getJsonToFlatFileConfigurationMap());
@@ -60,12 +66,12 @@ public class JsonFlareYmlConfiguration {
      * @throws JsonFlareException if any exception occured based on the cenarios this will throw
      */
     private void loadConfig(String ymlLocation, Map<String, YmlConfiguration> ymlConfigurationMap) throws JsonFlareException {
-        log.info("[YML-CONFIG] loading configurations for {}", ymlLocation);
+        log.info("Loading configurations for {}", ymlLocation);
         try {
             Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath*:" + ymlLocation + "/**/*.yml");
             if (resources.length == 0) {
                 String msg = String.format("No Yml Configurations are presented in the given location [%s]", ymlLocation);
-                log.error("[YML-CONFIG] {}", msg);
+                log.error("{}", msg);
                 throw new JsonFlareException(msg);
             }
             for (Resource resource : resources) {
@@ -78,7 +84,7 @@ public class JsonFlareYmlConfiguration {
                         log.error("Yml Configuration does not have the class-name please add it");
                         throw new JsonFlareException("Yml Configuration does not have the class-name please add it");
                     }
-                    log.error("[YML-CONFIG] configuration loaded for {}", ymlConfiguration.getClassName());
+                    log.error("Configuration loaded for {}", ymlConfiguration.getClassName());
                     ymlConfigurationMap.put(ymlConfiguration.getClassName(), ymlConfiguration);
                 } else {
                     log.error(String.format("Given resource does not exists [%s]", resource.getFilename()));

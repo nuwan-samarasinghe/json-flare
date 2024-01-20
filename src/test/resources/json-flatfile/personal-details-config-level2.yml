@@ -1,0 +1,24 @@
+name: "Personal Details"
+description: "Configuration for converting json object into flat file"
+dataType: "ObjectNode"
+className: "PD_L2"
+properties:
+  - name: "person"
+    description: "person details"
+    dataType: "ObjectNode"
+    properties:
+      - { name: "name", description: "Name of the person", dataType: "String", function: "LeftPadding(' ')", maxLength: 10, order: 1 }
+      - { name: "age", description: "Age of the person", dataType: "String", function: "RightPadding(' ')", maxLength: 3, order: 2 }
+      - name: "address"
+        description: "Address details of the person"
+        dataType: "ObjectNode"
+        properties:
+          - { name: "street", description: "Street of the address", dataType: "String", function: "LeftPadding(' ')", maxLength: 20, order: 3 }
+          - { name: "city", description: "City of the address", dataType: "String", function: "RightPadding(' ')", maxLength: 30, order: 4 }
+          - { name: "zipcode", description: "Zipcode of the address", dataType: "String", function: "RightPadding(' ')", maxLength: 5, order: 5 }
+  - name: "company"
+    description: "company details"
+    dataType: "ObjectNode"
+    properties:
+      - { name: "name", description: "Name of the company", dataType: "String", function: "LeftPadding(' ')", maxLength: 15, order: 6 }
+      - { name: "industry", description: "industry", dataType: "String", function: "LeftPadding(' ')", maxLength: 10, order: 7 }

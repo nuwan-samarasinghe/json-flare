@@ -3,6 +3,8 @@ package com.jsonflare.lib.jsonflare.jsontoflat.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jsonflare.lib.jsonflare.common.exceptions.JsonFlareException;
 import com.jsonflare.lib.jsonflare.common.ymlconfig.models.YmlConfiguration;
 import com.jsonflare.lib.jsonflare.jsontoflat.configs.FlatFileCreationTask;
@@ -10,7 +12,6 @@ import com.jsonflare.lib.jsonflare.jsontoflat.service.JsonToFlatFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
 /**
@@ -30,8 +31,17 @@ public class JsonToFlatFileServiceImpl implements JsonToFlatFileService {
             JsonNode jsonNode = objectMapper.readTree(data);
             StringBuilder flatFile = new StringBuilder();
             ForkJoinPool forkJoinPool = new ForkJoinPool();
-            forkJoinPool.invoke(new FlatFileCreationTask(ymlConfiguration, jsonNode, flatFile));
-            log.info("Using fork join to generate the flat file and configs are {}", forkJoinPool);
+            if (jsonNode instanceof ArrayNode) {
+                for (JsonNode jsNode : jsonNode) {
+                    forkJoinPool.invoke(new FlatFileCreationTask(ymlConfiguration, jsNode, flatFile));
+                }
+            } else if (jsonNode instanceof ObjectNode) {
+                forkJoinPool.invoke(new FlatFileCreationTask(ymlConfiguration, jsonNode, flatFile));
+                log.info("Using fork join to generate the flat file and configs are {}", forkJoinPool);
+            } else {
+                log.error("Invalid Json provided");
+                throw new JsonFlareException("Invalid Json provided");
+            }
             return flatFile.toString();
         } catch (JsonProcessingException e) {
             log.error("Invalid Json provided", e);

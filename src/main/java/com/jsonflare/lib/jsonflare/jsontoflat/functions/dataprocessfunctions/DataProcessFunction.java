@@ -7,4 +7,7 @@ package com.jsonflare.lib.jsonflare.jsontoflat.functions.dataprocessfunctions;
  * data processing before creating the flat-file
  */
 public interface DataProcessFunction {
+
+    String process(String parameter, Integer desiredLength, String originalString);
+
 }
